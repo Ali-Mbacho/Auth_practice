@@ -1,4 +1,4 @@
-# flutter_application_67
+# flutter_auth
 
 A new Flutter project.
 
