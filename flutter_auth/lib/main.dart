@@ -3,7 +3,7 @@ import 'package:openidconnect/openidconnect.dart';
 import 'package:flutter/foundation.dart';
 
 const String clientID = '9bsv0s3pbdv002o80qhg';
-const String redirectURL = 'http://localhost:8070/callback.html';
+const String redirectURL = 'http://localhost:8050/callback.html';
 const String defaultDiscoveryUrl =
     'https://oauth2.api.antinvestor.com/.well-known/openid-configuration';
 const defaultScopes = [
@@ -31,53 +31,8 @@ class _MyAppState extends State<MyApp> {
   AuthorizationResponse? identity;
   bool usePopup = true;
 //
-  String? errorMessage = null;
+  String? errorMessage;
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//         home: Scaffold(
-//             appBar: AppBar(
-//               title: const Text('OpenIDConnect'),
-//             ),
-//             body: Center(
-//               child: Column(children: <Widget>[
-//                 Container(
-//                   margin: EdgeInsets.all(25),
-//                   child: TextButton(
-//                       child: const Text('Authenticate'),
-//                       onPressed: () async {
-//                         try {
-//                           final response =
-//                               await OpenIdConnect.authorizeInteractive(
-//                             context: context,
-//                             title: 'Login',
-//                             request:
-//                                 await InteractiveAuthorizationRequest.create(
-//                               clientId: clientID,
-//                               redirectUrl: redirectURL,
-//                               scopes: defaultScopes,
-//                               configuration: discoveryDocument!,
-//                               autoRefresh: false,
-//                               useWebPopup: usePopup,
-//                             ),
-//                           );
-//                           setState(() {
-//                             identity = response;
-//                             errorMessage = null;
-//                           });
-//                         } on Exception catch (e) {
-//                           setState(() {
-//                             errorMessage = e.toString();
-//                             identity = null;
-//                           });
-//                         }
-//                       }),
-//                 )
-//               ]),
-//             )));
-//   }
-// }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -86,6 +41,7 @@ class _MyAppState extends State<MyApp> {
         children: [
           Center(
             child: TextButton.icon(
+              key: const Key('Authenticate'),
               onPressed: () async {
                 try {
                   final response = await OpenIdConnect.authorizeInteractive(
@@ -102,9 +58,9 @@ class _MyAppState extends State<MyApp> {
                   );
                   setState(() {
                     identity = response;
-                    print('TOKEN$response!.idToken');
                     errorMessage = null;
                   });
+                  // print('identity?.idToken');
                 } on Exception catch (e) {
                   setState(() {
                     errorMessage = e.toString();
